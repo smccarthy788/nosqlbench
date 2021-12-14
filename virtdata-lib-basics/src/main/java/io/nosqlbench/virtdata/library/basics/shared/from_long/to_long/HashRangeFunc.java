@@ -17,11 +17,11 @@ import java.util.function.LongUnaryOperator;
 @ThreadSafeMapper
 public class HashRangeFunc implements LongUnaryOperator {
 
-    private final Function<Long, Long> minFunc;
-    private final Function<Long, Long> maxFunc;
+    private final Function<Object, Object> minFunc;
+    private final Function<Object, Object> maxFunc;
     private final Hash hash = new Hash();
 
-    public HashRangeFunc(Function<Long, Long> minFunc, Function<Long, Long> maxFunc)
+    public HashRangeFunc(Function<Object, Object> minFunc, Function<Object, Object> maxFunc)
     {
         this.minFunc = minFunc;
         this.maxFunc = maxFunc;
@@ -29,8 +29,8 @@ public class HashRangeFunc implements LongUnaryOperator {
 
     @Override
     public long applyAsLong(long operand) {
-        long minValue = minFunc.apply(operand);
-        long maxValue = maxFunc.apply(operand);
+        long minValue = (long) minFunc.apply(operand);
+        long maxValue = (long) maxFunc.apply(operand);
 
         long width = (minValue - maxValue)+1;
 
